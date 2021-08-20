@@ -16,66 +16,69 @@
   }
 }
 
-.translator {
-  &-section {
-    max-width: 50rem;
-    margin: auto;
+.translator-section {
+  
+  max-width: 80rem;
+  margin: auto;
 
-    .col {
-      text-align: center;
-      padding: 1rem;
-    }
+  .col {
+    text-align: center;
+    padding: 1rem;
+  }
 
-    textarea {
-      width: 100%;
-      margin-top: 2rem;
-      height: 10rem;
-      border-radius: 1rem;
-      padding: 1rem;
-      font-size: 2rem;
-      border: 2px solid #eceaea;
-      outline: none;
-      resize: none;
-    }
+  textarea {
+    width: 100%;
+    margin-top: 2rem;
+    height: 30rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 2rem;
+    border: 2px solid #eceaea;
+    outline: none;
+    resize: none;
+  }
 
-    textarea:focus-visible {
-      border: 2px solid #eceaea;
-    }
+  textarea:focus-visible {
+    border: 2px solid #eceaea;
+  }
 
-    select {
-      display: inline-block;
-      font-size: 1.5rem;
-      padding: 5px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
+  select {
+    display: inline-block;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+  }
 
-    &-translate {
-      cursor: pointer;
-      user-select: none;
-      display: inline-block;
-      font-weight: normal;
-      text-align: center;
-      text-decoration: none;
-      background: rgb(53,116,227);
-      border-radius: 6px;
-      border-width: 0px;
-      color: rgb(255,255,255);
-      font-family: sans-serif;
-      height: auto;
-      transition: all .4s ease;
-      padding: 6px 18px;
-      text-shadow: none;
-      width: auto;
-      font-size: 1.5rem;
-      line-height: 1.5em;
-      margin-top: 2rem;
-    }
+  &__result {
+    color: #6633ca;
+  }
 
-    &-translate:hover {
-      background: rgb(58,127,249);
-    }
+  &__translate-btn {
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    font-weight: normal;
+    text-align: center;
+    text-decoration: none;
+    background: rgb(53,116,227);
+    border-radius: 6px;
+    border-width: 0px;
+    color: rgb(255,255,255);
+    font-family: sans-serif;
+    height: auto;
+    transition: all .4s ease;
+    padding: 6px 18px;
+    text-shadow: none;
+    width: auto;
+    font-size: 1.5rem;
+    line-height: 1.5em;
+    margin-top: 2rem;
+  }
+
+  &-translate:hover {
+    background: rgb(58,127,249);
   }
 }
 
