@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from "react-loader-spinner";
 import Tooltip from './Tooltip';
+import debounce from 'lodash/debounce';
 import axios from 'axios';
 
 const Header = () => {
@@ -9,7 +10,7 @@ const Header = () => {
   const [language, setLanguage] = useState("es")
   const [sourceText, setSourceText] = useState("")
   const [resultText, setResultText] = useState("")
-  const [tooltipText, setTooltipText] = useState("asdf")
+  const [tooltipText, setTooltipText] = useState("")
   const [showTooltip, setShowTooltip] = useState(false)
   const [positionX, setPositionX] = useState(0)
   const [positionY, setPositionY] = useState(0)
@@ -26,6 +27,10 @@ const Header = () => {
       return ''
     }  
   }, [])
+
+  const handleClearText = useCallback(() => {
+    setShowTooltip(false)  
+  }, [setShowTooltip])
 
   const sendTranslateRequest = useCallback((text, setText, setShowTooltip) => {
     const requestData = {
@@ -55,7 +60,7 @@ const Header = () => {
 
   const handleSelectedText = useCallback(() => {
     const selectedText = getSelectedText()
-    if (selectedText !== '') {
+    if (selectedText) {
       sendTranslateRequest(selectedText, setTooltipText, setShowTooltip)
     } else {
       setShowTooltip(false)
@@ -75,19 +80,25 @@ const Header = () => {
   const handleLanguageChange= useCallback((event) => {
     setLanguage(event.target.value)
   }, [setLanguage])
+
+  const sendRequest = useCallback(debounce((text) => {
+    sendTranslateRequest(text, setResultText)
+  }, 1000), [])
   
-  const handleSourceTextChange = useCallback((event) => {
-    setSourceText(event.target.value)
-    const sendText = event.target.value
-    sendTranslateRequest(sendText, setResultText)
-  },[sendTranslateRequest, setSourceText, setResultText])
+  const handleSourceTextChange = useCallback(
+    event => {
+      setSourceText(event.target.value)
+      sendRequest(event.target.value)
+    },
+    [sendRequest]
+  )
 
   return (
     <Container fluid className='translator'>
       {showTooltip && (
           <Tooltip 
-            data={'tooltipText'}
-            style={{top: `${positionY}px`, left: `${positionX}px`}}
+            data={tooltipText}
+            style={{top: `${positionY + 10}px`, left: `${positionX + 10}px`}}
           />
       )}
       <Row className='translator-section'>
@@ -117,6 +128,7 @@ const Header = () => {
                 value={sourceText} 
                 onChange={handleSourceTextChange}
                 onMouseUp={handleSelectedText}
+                onMouseDown={handleClearText}
               />
             </Col>
             <Col md={6} xs={12}>
