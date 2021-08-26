@@ -32,11 +32,15 @@ const Header = () => {
     setShowTooltip(false)  
   }, [setShowTooltip])
 
-  const sendTranslateRequest = useCallback((text, setText, setShowTooltip) => {
+  const sendTranslateRequest = useCallback((text, setText, setShowTooltip, targetLanguage) => {
+    if (text === '') {
+      setText('')
+      return
+    }
     const requestData = {
       params: {
         text: text,
-        target: language
+        target: targetLanguage ?? language
       }
     }
     const header = {
@@ -79,11 +83,12 @@ const Header = () => {
 
   const handleLanguageChange= useCallback((event) => {
     setLanguage(event.target.value)
-  }, [setLanguage])
+    sendTranslateRequest(sourceText, setResultText, undefined, event.target.value)
+  }, [setLanguage, sendTranslateRequest, sourceText])
 
   const sendRequest = useCallback(debounce((text) => {
     sendTranslateRequest(text, setResultText)
-  }, 1000), [])
+  }, 1000), [sendTranslateRequest, setResultText])
   
   const handleSourceTextChange = useCallback(
     event => {
@@ -114,7 +119,7 @@ const Header = () => {
             </div>
           }
           <select 
-            value={language} 
+            value={language}
             onChange={handleLanguageChange} 
             className="browser-default custom-select"
           >
