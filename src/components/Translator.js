@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from "react-loader-spinner";
+import Switch from "react-switch";
 import Tooltip from './Tooltip';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
@@ -8,6 +9,7 @@ import axios from 'axios';
 const Header = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [language, setLanguage] = useState("es")
+  const [checked, setChecked] = useState(false)
   const [sourceText, setSourceText] = useState("")
   const [resultText, setResultText] = useState("")
   const [tooltipText, setTooltipText] = useState("")
@@ -31,6 +33,10 @@ const Header = () => {
   const handleClearText = useCallback(() => {
     setShowTooltip(false)  
   }, [setShowTooltip])
+
+  const handleSubTextChange = useCallback((checked) => {
+    setChecked(checked)
+  }, [setChecked])
 
   const sendTranslateRequest = useCallback((text, setText, setShowTooltip, targetLanguage) => {
     if (text === '') {
@@ -63,6 +69,7 @@ const Header = () => {
   }, [language])
 
   const handleSelectedText = useCallback(() => {
+    if (!checked) return
     const selectedText = getSelectedText()
     if (selectedText) {
       sendTranslateRequest(selectedText, setTooltipText, setShowTooltip)
@@ -78,7 +85,8 @@ const Header = () => {
     getSelectedText,
     setShowTooltip,
     setPositionX,
-    setPositionY
+    setPositionY,
+    checked
   ])
 
   const handleLanguageChange= useCallback((event) => {
@@ -137,6 +145,10 @@ const Header = () => {
               />
             </Col>
             <Col md={6} xs={12}>
+              <label className='translator-section__switch'>
+                <span>Show SubTranslatedText &nbsp;</span>
+                <Switch onChange={handleSubTextChange} checked={checked} />
+              </label>
               <textarea
                 value={resultText} 
                 className='translator-section__result'

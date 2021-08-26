@@ -51,6 +51,12 @@
     outline: none;
   }
 
+  &__switch {
+    display: flex;
+    position: absolute;
+    right: 2em;
+  }
+
   &__result {
     color: #6633ca;
   }
