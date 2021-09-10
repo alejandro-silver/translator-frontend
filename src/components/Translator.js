@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Loader from "react-loader-spinner";
 import Switch from "react-switch";
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import Tooltip from './Tooltip';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
@@ -126,14 +128,14 @@ const Translator = () => {
               />
             </div>
           }
-          <select 
+          <Select 
             value={language}
             onChange={handleLanguageChange} 
             className="browser-default custom-select"
           >
-            <option value="es">English to Spanish</option>
-            <option value="en">Spanish to English</option>
-          </select>
+            <MenuItem value="es">English to Spanish</MenuItem>
+            <MenuItem value="en">Spanish to English</MenuItem>
+          </Select>
 
           <Row>
             <Col md={6} xs={12}>
