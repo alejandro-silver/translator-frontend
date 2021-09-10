@@ -6,7 +6,7 @@ import Tooltip from './Tooltip';
 import debounce from 'lodash/debounce';
 import axios from 'axios';
 
-const Header = () => {
+const Translator = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [language, setLanguage] = useState("es")
   const [checked, setChecked] = useState(false)
@@ -161,4 +161,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Translator;
